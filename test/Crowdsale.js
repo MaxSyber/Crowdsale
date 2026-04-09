@@ -83,4 +83,30 @@ describe('Crowdsale', () => {
             }) 
         })
     })
+
+    describe('Sending Eth', () => {
+        let amount = tokens(10)
+        let transaction, result
+        
+        describe('Success', () => {
+            beforeEach(async () => {
+                transaction = await user1.sendTransaction({to: crowdsale.address, value: amount })
+                result = await transaction.wait()
+            })
+
+            it('Updates Contracts Ether Balance', async () => {            
+                expect(await ethers.provider.getBalance(crowdsale.address)).to.equal(amount)
+            })
+
+            it('Updates User Token Balance', async () => {            
+                expect(await token.balanceOf(user1.address)).to.equal(amount)
+            })
+        })
+
+        //describe('Failure', () => {
+         //   it('Reject Insufficient ETH', async () => {            
+          //  await expect(crowdsale.connect(user1).buyTokens(tokens(10), {value: 0})).to.be.reverted
+          //  }) 
+        //})
+    })
 })

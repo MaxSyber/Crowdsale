@@ -6,6 +6,7 @@ import Navigation from "./Navigation";
 import Info from "./Info";
 import Loading from "./Loading";
 import Progress from "./Progress";
+import Buy from './Buy';
 
 import TOKEN_ABI from '../abis/Token.json';
 import CROWDSALE_ABI from '../abis/Crowdsale.json';
@@ -26,7 +27,6 @@ function App() {
     const [isLoading, setIsLoading] = useState(true)
     
     const loadBlockchainData = async () => {
-        console.log(ethers)
         const provider = new ethers.providers.Web3Provider(window.ethereum)
         setProvider(provider)
 
@@ -69,6 +69,7 @@ function App() {
             ) : (
                 <>
                     <p className="text-center"><strong>Current Price:</strong> {price} </p>
+                    <Buy provider={provider} price={price} crowdsale={crowdsale} setIsLoading={setIsLoading} />
                     <Progress maxTokens={maxTokens} tokensSold={tokensSold}/>
                 </>
             )}
